@@ -51,17 +51,13 @@ menu.state('preachingSession', {
 
 
 // Register USSD Handler with express
-app.post('/ussd', (res, req) => {
-    let args = {
-        phoneNumber: req.body.phoneNumber,
-        sessionId: req.body.sessionId,
-        serviceCode: req.body.serviceCode,
-        text: req.body.text
-    };
-    menu.run(args, resMsg => {
-        res.send(resMsg);
+ 
+app.post('/ussd', function(req, res){
+    menu.run(req.body, ussdResult => {
+        res.send(ussdResult);
     });
 });
+ 
 
 //the page-not-found error 404 middleware
 app.use(function(req,res,next){
