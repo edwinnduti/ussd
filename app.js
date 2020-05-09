@@ -54,13 +54,15 @@ menu.state('preachingSession', {
  
 app.post('/ussd', function(req, res){
     menu.run(req.body, ussdResult => {
-        res.send(ussdResult);
+	    res.type('text/plain');
+	    res.send(ussdResult);
     });
 });
  
 
 //the page-not-found error 404 middleware
 app.use(function(req,res,next){
+	res.type('text/plain');
 	res.status(404);
 	res.render('404');
 });
@@ -68,6 +70,7 @@ app.use(function(req,res,next){
 //the internal-error 500 middleware
 app.use(function(err,req,res,next){
 	console.error(err.stack);
+	res.type('text/plain');
 	res.status(500);
 	res.render('500');
 });
